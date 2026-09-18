@@ -10,3 +10,12 @@ Branch `plat-4844-profiles-test`. Three cases for the launch-form **Config profi
 
 Nextflow sets `baseDir` to the script's parent directory and only loads `baseDir/nextflow.config`,
 so root profiles are unreachable for a subdirectory main script.
+
+## v2 syntax variant
+
+`v2/main.nf` is written in the Nextflow v2 language (`script:` block with triple-quoted
+string instead of the removed `/.../` delimiters). It lints clean under `NXF_SYNTAX_PARSER=v2`,
+whereas the root `main.nf` fails with `Unexpected input: '}'`.
+
+Use it for any test that needs a run to actually succeed with the v2 parser enabled.
+`v2/nextflow.config` also defines profiles `v2Quick` (2s) and `v2Slow` (30s).
