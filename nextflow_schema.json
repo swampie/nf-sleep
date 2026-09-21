@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/swampie/nf-sleep/master/nextflow_schema.json",
+  "title": "swampie/nf-sleep pipeline parameters",
+  "description": "Sleep pipeline used as a QA fixture. Profiles define only `timeout`, so the other params exercise the PLAT-6554 case where the incoming profile does not define the parameter.",
+  "type": "object",
+  "definitions": {
+    "sleep_options": {
+      "title": "Sleep options",
+      "type": "object",
+      "description": "Controls how long and how many times the pipeline sleeps.",
+      "properties": {
+        "timeout": {
+          "type": "integer",
+          "default": 10,
+          "description": "Seconds each task sleeps. DEFINED BY the rootOnlyAlpha/rootOnlyBeta profiles — a profile value is expected to win here (PLAT-6554 case 1, by design).",
+          "fa_icon": "fas fa-clock"
+        },
+        "times": {
+          "type": "integer",
+          "default": 1,
+          "description": "Number of tasks to run. NOT defined by any profile — a user-typed value must survive a re-fetch (PLAT-6554 case 2).",
+          "fa_icon": "fas fa-hashtag"
+        },
+        "forks": {
+          "type": "integer",
+          "default": 1,
+          "description": "Max parallel tasks. NOT defined by any profile (PLAT-6554 case 2).",
+          "fa_icon": "fas fa-code-branch"
+        },
+        "outdir": {
+          "type": "string",
+          "format": "directory-path",
+          "default": "results",
+          "description": "Output directory. NOT defined by any profile (PLAT-6554 case 2).",
+          "fa_icon": "fas fa-folder-open"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/definitions/sleep_options"
+    }
+  ]
+}
